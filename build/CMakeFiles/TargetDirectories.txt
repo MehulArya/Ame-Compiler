@@ -1,0 +1,3 @@
+/mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/build/CMakeFiles/ame.dir
+/mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/build/CMakeFiles/edit_cache.dir
+/mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/build/CMakeFiles/rebuild_cache.dir
