@@ -4,4 +4,5 @@ project(rain)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ame src/main.cpp)
+add_executable(ame src/main.cpp
+        src/tokenization.h)

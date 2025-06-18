@@ -3,79 +3,20 @@
 #include <optional>
 #include <sstream>
 #include <vector>
-using namespace std;
+#include "./tokenization.h"
 
-enum class TokenType {
-    _return,
-    int_lit,
-    semi
-};
 
-struct Token {
-    TokenType type;
-    optional<string> value {};
-};
-
-vector<Token> tokenize(const string& str) {
-    vector<Token> tokens;
-    string buf;
-    for (int i = 0; i < str.length(); i++) {
-        char c = str[i];
-        if (isalpha(c)) {
-            buf.push_back(c);
-            i++;
-            while (isalnum(str[i])) {
-                buf.push_back(str[i]);
-                i++;
-            }
-            i--;
-
-            if (buf == "return") {
-                tokens.push_back({.type = TokenType::_return});
-                buf.clear();
-                continue;
-            }
-            else {
-                cout << "Error you mess" << endl;
-                exit(EXIT_FAILURE);
-            }
-        }
-        else if (isdigit(c)) {
-            buf.push_back(c);
-            i++;
-            while (isdigit(str[i])) {
-                buf.push_back(str[i]);
-                i++;
-            }
-            i--;
-            tokens.push_back({.type = TokenType::int_lit, .value = buf});
-            buf.clear();
-        }
-        else if (c == ';') {
-            tokens.push_back({.type = TokenType::semi});
-        }
-        else if (isspace(c)){
-            continue;
-        }
-        else {
-            cout << "Error you mess" << endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-    return tokens;
-}
-
-string tokens_to_asm(const vector<Token>& tokens) {
-    stringstream output;
+std::string tokens_to_asm(const std::vector<Token>& tokens) {
+    std::stringstream output;
     output << "global _start\n_start:\n";
     for (int i = 0; i < tokens.size(); i++) {
         const Token& token = tokens[i];
-        if (token.type == TokenType::_return) {
-            if (i + 1 < tokens.size() && tokens[i+1].type == TokenType::int_lit) {
-                 if (i + 2 < tokens.size() && tokens[i + 2].type == TokenType::semi) {
-                     output << "   mov rax, 60" << "\n";
-                     output << "   mov rdi, " << tokens[i+1].value.value() << "\n";
-                     output << "   syscall";
+        if (token.type == TokenType::exit) {
+            if (i + 1 < tokens.size() && tokens[i + 1].type == TokenType::int_lit) {
+                if (i + 2 < tokens.size() && tokens[i + 2].type == TokenType::semi) {
+                    output << "   mov rax, 60\n";
+                    output << "   mov rdi, " << tokens[i + 1].value.value() << "\n";
+                    output << "   syscall" << "\n";
                 }
             }
         }
@@ -85,29 +26,30 @@ string tokens_to_asm(const vector<Token>& tokens) {
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        cout << "Incorrect Usage" << endl;
-        cout << "Ame <input.ame>" << endl;
+        std::cout << "Incorrect Usage" << std::endl;
+        std::cout << "Ame <input.ame>" << std::endl;
         return EXIT_FAILURE;
     }
 
-    string contents;
+    std::string contents;
     {
-        stringstream contents_stream;
-        fstream input(argv[1], ios::in);
+        std::stringstream contents_stream;
+        std::fstream input(argv[1], std::ios::in);
         contents_stream << input.rdbuf();
         contents = contents_stream.str();
     }
 
-    vector<Token> tokens = tokenize(contents);
+    tokenizer tokenizer(std::move(contents));
+    std::vector<Token> tokens = tokenizer.tokenize();
 
     {
-        fstream file("out.asm", ios::out);
-        file <<  tokens_to_asm(tokens);
+        std::fstream file("out.asm", std::ios::out);
+        file << tokens_to_asm(tokens);
     }
 
+    system("nasm -felf64 out.asm -o out.o");
+    system("ld out.o -o out");
 
-        system("nasm -felf64 out.asm");
-        system("ld -o out out.o");
 
     return EXIT_SUCCESS;
 }
