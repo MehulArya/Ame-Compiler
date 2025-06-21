@@ -89,7 +89,7 @@ exit 21;
 ## References & Inspirations
 
 * MIT 6.035 - Computer Language Engineering (Fall 2005)
-* [ChatGPT](https://openai.com/chatgpt) – helped me when I was stuck
+* ChatGPT
 * YouTube, Google, StackOverflow – always open
 * Curiosity & late-night "what if I built a compiler" thoughts
 
