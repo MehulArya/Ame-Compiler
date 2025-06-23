@@ -1,106 +1,118 @@
-# Ame-Compiler
+# Ame Compiler
 
-This is a simple compiler I'm building from scratch — starting with tokenizing and converting programs like `exit 21;` into x86-64 assembly.
-
-I began this project to understand what really happens behind the scenes when we go from high-level languages like C++, Java, or Python... all the way down to bare metal. After learning Assembly in my Microprocessor and Interfaces class, I was blown away by the jump in abstraction — and honestly, I’m just a nerd who likes to tweak things.
-
-I’m not great at Assembly (yet), and maybe that’s why I find it so fascinating that high-level languages save us from writing all that manually. So, I'm building a compiler — not because I have to, but because I *want* to.
-
----
-
-## What It Does (So Far)
-
-* Tokenizes very simple `.ame` programs like:
+A toy compiler written in modern **C++** that translates a minimal language (`.ame`) into **x86-64 Linux assembly**. Currently supports simple programs like:
 
 ```c
 exit 21;
 ```
 
-* Translates them into x86-64 Assembly using Linux system calls:
+which compile down to:
 
 ```asm
-mov rax, 60     ; syscall number for exit
-mov rdi, 21     ; exit code
+mov rax, 60     ; syscall: exit  
+mov rdi, 21     ; exit code  
 syscall
 ```
 
-* Outputs this to `out.asm`, which is assembled and linked into a Linux executable.
-
-* Automatically:
-
-  * Assembles the `.asm` using `nasm`
-  * Links the object file using `ld`
-  * Produces a binary called `out`
-
-* Run the binary and get the correct exit status with:
-
-```bash
-echo $?
-```
+Built from scratch to explore how compilers work — from tokenizing source code to generating executable binaries.
 
 ---
 
-## Example Usage
+## Features
 
-```bash
-g++ main.cpp -o ame
-./ame test.ame
-# Generates out.asm -> out.o -> out
-./out
-echo $?
-# Output: 21
-```
+* Tokenizer
+  Parses `.ame` source files into tokens (`exit`, integer literals, semicolons).
 
-Contents of `test.ame`:
+* Parser
+  Builds a minimal AST (Abstract Syntax Tree) with support for integer expressions in `exit` statements.
+
+* Code Generator
+  Generates x86-64 assembly code that uses Linux syscalls to exit with a user-defined code.
+
+* Assembler & Linker Integration
+  Automatically:
+
+  * Assembles with NASM
+  * Links with ld
+  * Outputs an executable binary: `out`
+
+---
+
+## Example
+
+### Input: `test.ame`
 
 ```c
 exit 21;
 ```
 
+### Compile and Run
+
+```bash
+g++ main.cpp -o ame
+./ame test.ame      # Generates out.asm, compiles and links it
+./out               # Run the compiled binary
+echo $?             # Output: 21
+```
+
 ---
 
-## Why I’m Building This
+## Project Structure
 
-> *"I wanted to build this compiler to understand how languages actually work. I’ve always wondered how we went from Assembly to C++ or Python. This project is for learning and having fun."*
-> – Mehul Arya
-
----
-
-## Tools & Tech Used
-
-* C++ (core compiler logic)
-* NASM (Netwide Assembler)
-* GNU `ld` (linker)
-* Linux syscalls (no libc)
-* Terminal, because command-line is cool
+```
+ame-compiler/
+├── main.cpp          # Entry point: reads .ame files and drives compilation
+├── tokenization.h    # Token definitions and tokenizer class
+├── parser.h          # AST structures and parser
+├── generation.h      # Assembly code generator
+├── test.ame          # Sample Ame program
+└── README.md
+```
 
 ---
 
 ## Future Plans
 
-* Add support for arithmetic expressions: `exit 10 + 11;`
-* Parse and generate intermediate representation (IR)
-* Add error messages with line/column positions
-* Implement a proper parser (recursive descent?)
-* Learn about registers, stack, and calling conventions
+* Add arithmetic expression support: `exit 10 + 11;`
+* Add proper error reporting (line/column)
+* Implement recursive descent parsing
+* Build an intermediate representation (IR)
+* Support variables and function definitions
+* Learn stack/register-level architecture deeper
 
 ---
 
-## References & Inspirations
+## Why I’m Building This
 
-* MIT 6.035 - Computer Language Engineering (Fall 2005)
-* [ChatGPT](https://openai.com/chatgpt) – helped me when I was stuck
-* YouTube, Google, StackOverflow – always open
-* Curiosity & late-night "what if I built a compiler" thoughts
+> “Those who can imagine anything, can create the impossible.”
+> — Dr. Alan Turing
+
+---
+
+## Tools and Technologies
+
+* C++ for compiler implementation
+* NASM for assembly
+* GNU `ld` for linking
+* Linux syscalls (without libc)
+* Terminal-based development and testing
+
+---
+
+## References and Inspirations
+
+* MIT 6.035 - Computer Language Engineering
+* ChatGPT for guidance and debugging help
+* Stack Overflow, YouTube, and documentation
+* Curiosity and exploration
 
 ---
 
 ## About Me
 
-Hi, I’m **Mehul Arya**, a curious CS undergrad who loves learning by building things.
+Hi, I’m **Mehul Arya**, a computer science undergrad who enjoys learning by building things from scratch. I’m especially interested in how code touches bare metal.
 
 * [LinkedIn](https://www.linkedin.com/in/mehularya/)
-* Into programming, philosophy, and the magic of code touching bare metal
 
 ---
 
@@ -111,8 +123,6 @@ git clone https://github.com/your-username/ame-compiler.git
 cd ame-compiler
 g++ main.cpp -o ame
 ./ame test.ame
-nasm -felf64 out.asm -o out.o
-ld -o out out.o
 ./out
 echo $?
 ```
@@ -121,8 +131,8 @@ echo $?
 
 ## Thanks
 
-Thanks to everyone who publishes open content — this project is built with curiosity and community support.
+Thanks to the open-source community and educators who freely share knowledge. This project is built on the foundation of that generosity.
 
-> I’ll keep updating this compiler and README as I learn more. Stay tuned!
+I will keep updating this compiler and README as I learn more.
 
 ---

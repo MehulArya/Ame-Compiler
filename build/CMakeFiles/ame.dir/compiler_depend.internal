@@ -3,6 +3,8 @@
 
 CMakeFiles/ame.dir/src/main.cpp.o
  /mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/src/main.cpp
+ /mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/src/generation.h
+ /mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/src/parser.h
  /mnt/c/CompSci Grad God tier/Projects/Ame-Compiler/src/tokenization.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
