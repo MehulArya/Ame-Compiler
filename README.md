@@ -100,16 +100,10 @@ ame-compiler/
 
 ## References and Inspirations
 
-* MIT 6.035 - Computer Language Engineering
-* ChatGPT for guidance and debugging help
-* Stack Overflow, YouTube, and documentation
-* Curiosity and exploration
-=======
 * MIT 6.035 - Computer Language Engineering (Fall 2005)
 * ChatGPT
 * YouTube, Google, StackOverflow – always open
 * Curiosity & late-night "what if I built a compiler" thoughts
->>>>>>> 6906d37357154c9ccd1133b6736853f464b154ca
 
 ---
 

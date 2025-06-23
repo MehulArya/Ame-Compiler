@@ -7,7 +7,9 @@
 enum class TokenType {
     exit,
     int_lit,
-    semi
+    semi,
+    open_paren,
+    close_paren
 };
 
 struct Token {
@@ -17,7 +19,7 @@ struct Token {
 
 class tokenizer {
 public:
-        inline explicit tokenizer(const std::string src) : m_src(std::move(src)) { }
+    inline explicit tokenizer(const std::string src) : m_src(std::move(src)) { }
 
     std::vector<Token> tokenize() {
         std::vector<Token> tokens;
@@ -45,6 +47,16 @@ public:
                 }
                 tokens.push_back({.type = TokenType::int_lit, .value = buf});
                 buf.clear();
+            }
+            else if (peek().value() == '(') {
+                tokens.push_back({.type = TokenType::open_paren});
+                consume();
+                continue;
+            }
+            else if (peek().value() == ')') {
+                tokens.push_back({.type = TokenType::close_paren});
+                consume();
+                continue;
             }
             else if (peek().value() == ';') {
                 tokens.push_back({.type = TokenType::semi});

@@ -1,1 +1,2 @@
-exit 21;
+let x = 8;
+exit(x);

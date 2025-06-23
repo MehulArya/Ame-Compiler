@@ -28,7 +28,8 @@ public:
         std::optional<NodeExit> exit_node;
         while (peek().has_value()) {
             if (peek().has_value()) {
-                if (peek().value().type == TokenType::exit) {
+                if (peek().value().type == TokenType::exit && peek(1).has_value() && peek(1).value().type == TokenType::open_paren) {
+                    consume();
                     consume();
                     if (auto node_expr = parse_expr()) {
                         exit_node = NodeExit{.expr = node_expr.value()};
@@ -37,11 +38,17 @@ public:
                         std::cout << "Invalid Expression" << std::endl;
                         exit(EXIT_FAILURE);
                     }
-                    if (peek().has_value() && peek().value().type == TokenType::semi) {
+                    if (peek().has_value() && peek().value().type == TokenType::close_paren) {
                         consume();
                     }
                     else {
                         std::cout << "Invalid Expression" << std::endl;
+                    }
+                    if (peek().has_value() && peek().value().type == TokenType::semi) {
+                        consume();
+                    }
+                    else {
+                        std::cout << "Expected Semi Colon" << std::endl;
                         exit(EXIT_FAILURE);
                     }
                 }

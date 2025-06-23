@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
         std::cout << "No Exit Statement Found" << std::endl;
         exit(EXIT_FAILURE);
     }
+
     Generator generator(tree.value());
 
     {
