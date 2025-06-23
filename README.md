@@ -103,11 +103,6 @@ ame-compiler/
 * MIT 6.035 - Computer Language Engineering (Fall 2005)
 * ChatGPT
 * YouTube, Google, StackOverflow – always open
-<<<<<<< HEAD
-* Curiosity & late-night "what if I built a compiler" thoughts
-=======
-* And No if you are waiting for late night thoughts - NO I don't wake late at night not good for brain.
->>>>>>> b9c75389a8f2fc639dfbb85f3ace94ecfcf5a430
 
 ---
 
