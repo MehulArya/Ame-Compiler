@@ -120,6 +120,7 @@ ame-compiler/
 Hi, I’m **Mehul Arya**, a computer science undergrad who enjoys learning by building things from scratch. I’m especially interested in how code touches bare metal.
 
 * [LinkedIn](https://www.linkedin.com/in/mehularya/)
+* [LeetCode](https://leetcode.com/u/2RDp5z7CQu/)
 
 ---
 
