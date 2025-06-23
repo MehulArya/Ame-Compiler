@@ -83,8 +83,6 @@ ame-compiler/
 ---
 
 ## Why I’m Building This
-
-<<<<<<< HEAD
 > “Those who can imagine anything, can create the impossible.”
 > — Dr. Alan Turing
 
