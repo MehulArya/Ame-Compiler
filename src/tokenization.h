@@ -9,7 +9,10 @@ enum class TokenType {
     int_lit,
     semi,
     open_paren,
-    close_paren
+    close_paren,
+    ident,
+    let,
+    eq
 };
 
 struct Token {
@@ -35,9 +38,15 @@ public:
                     buf.clear();
                     continue;
                 }
+                else if (buf == "let") {
+                    tokens.push_back({.type = TokenType::let});
+                    buf.clear();
+                    continue;
+                }
                 else {
-                    std::cout << "Error! you messed up" << std::endl;
-                    exit(EXIT_FAILURE);
+                    tokens.push_back({.type = TokenType::ident, .value = buf});
+                    buf.clear();
+                    continue;
                 }
             }
             else if (std::isdigit(peek().value())) {
@@ -55,6 +64,11 @@ public:
             }
             else if (peek().value() == ')') {
                 tokens.push_back({.type = TokenType::close_paren});
+                consume();
+                continue;
+            }
+            else if (peek().value() == '=') {
+                tokens.push_back({.type = TokenType::eq});
                 consume();
                 continue;
             }

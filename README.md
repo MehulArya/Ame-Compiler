@@ -1,137 +1,94 @@
 # Ame Compiler
 
-A toy compiler written in modern **C++** that translates a minimal language (`.ame`) into **x86-64 Linux assembly**. Currently supports simple programs like:
+Ame is a toy compiler for a minimalistic programming language that supports basic variable declarations and program termination via the `exit()` statement.
 
-```c
-exit 21;
+This compiler performs:
+- Tokenization of source code into lexical tokens.
+- Parsing into an Abstract Syntax Tree (AST).
+- Code Generation into x86-64 NASM assembly.
+- Assembly & Linking using `nasm` and `ld` to produce an executable.
+
+## Language Features
+
+Currently, the language supports:
+- Integer literals and identifiers.
+- Variable declarations using `let`.
+- Exiting a program using `exit(expression);`.
+
+### Example Input (`input.ame`)
+
+```plaintext
+let x = 9;
+let y = 7;
+exit(x);
 ```
 
-which compile down to:
+This program will return 9 as the exit code of the compiled executable.
 
-```asm
-mov rax, 60     ; syscall: exit  
-mov rdi, 21     ; exit code  
-syscall
-```
+## Build Instructions
 
-Built from scratch to explore how compilers work — from tokenizing source code to generating executable binaries.
+### Requirements
 
----
+- C++17 compatible compiler
+- NASM (Netwide Assembler)
+- GNU linker (`ld`)
 
-## Features
-
-* Tokenizer
-  Parses `.ame` source files into tokens (`exit`, integer literals, semicolons).
-
-* Parser
-  Builds a minimal AST (Abstract Syntax Tree) with support for integer expressions in `exit` statements.
-
-* Code Generator
-  Generates x86-64 assembly code that uses Linux syscalls to exit with a user-defined code.
-
-* Assembler & Linker Integration
-  Automatically:
-
-  * Assembles with NASM
-  * Links with ld
-  * Outputs an executable binary: `out`
-
----
-
-## Example
-
-### Input: `test.ame`
-
-```c
-exit 21;
-```
-
-### Compile and Run
+### Compile the Compiler
 
 ```bash
-g++ main.cpp -o ame
-./ame test.ame      # Generates out.asm, compiles and links it
-./out               # Run the compiled binary
-echo $?             # Output: 21
+g++ Main.cpp -o Ame
 ```
 
----
+### Run
+
+```bash
+./Ame input.ame
+```
+
+This will generate:
+- `out.asm`: NASM assembly code
+- `out.o`: Object file
+- `out`: Executable binary
+
+Run the output:
+
+```bash
+./out
+echo $?  # Check the exit code (will output 9 for above example)
+```
 
 ## Project Structure
 
 ```
-ame-compiler/
-├── main.cpp          # Entry point: reads .ame files and drives compilation
-├── tokenization.h    # Token definitions and tokenizer class
-├── parser.h          # AST structures and parser
-├── generation.h      # Assembly code generator
-├── test.ame          # Sample Ame program
-└── README.md
+.
+├── Main.cpp          # Entry point for the compiler
+├── tokenization.h    # Lexer: Token definitions and tokenizer class
+├── parser.h          # Parser: AST structures and parsing logic
+├── generation.h      # Code generator for x86-64 NASM output
+├── input.ame         # Sample input program
+├── out.asm           # Generated NASM assembly
+├── out.o             # Compiled object file
+└── out               # Final executable
 ```
 
----
+## Notes
 
-## Future Plans
+- The compiler only supports `exit(expr);` with either literals or declared variables.
+- Variable shadowing or complex expressions are not yet supported.
+- This is a proof-of-concept and educational compiler project.
 
-* Add arithmetic expression support: `exit 10 + 11;`
-* Add proper error reporting (line/column)
-* Implement recursive descent parsing
-* Build an intermediate representation (IR)
-* Support variables and function definitions
-* Learn stack/register-level architecture deeper
+## Future Improvements
 
----
+- Support arithmetic operations (e.g., `+`, `-`)
+- Add variable reassignment and scoping
+- Implement functions or loops
+- Better error handling and diagnostics
 
-## Why I’m Building This
-> “Those who can imagine anything, can create the impossible.”
-> — Dr. Alan Turing
+## Author
 
----
+**Mehul Arya**  
+[LinkedIn](https://www.linkedin.com/in/mehul-arya-3063a630b/)
 
-## Tools and Technologies
+## License
 
-* C++ for compiler implementation
-* NASM for assembly
-* GNU `ld` for linking
-* Linux syscalls (without libc)
-* Terminal-based development and testing
-
----
-
-## References and Inspirations
-
-* MIT 6.035 - Computer Language Engineering (Fall 2005)
-* ChatGPT
-* YouTube, Google, StackOverflow – always open
-
----
-
-## About Me
-
-Hi, I’m **Mehul Arya**, a computer science undergrad who enjoys learning by building things from scratch. I’m especially interested in how code touches bare metal.
-
-* [LinkedIn](https://www.linkedin.com/in/mehularya/)
-* [LeetCode](https://leetcode.com/u/2RDp5z7CQu/)
-
----
-
-## Getting Started
-
-```bash
-git clone https://github.com/your-username/ame-compiler.git
-cd ame-compiler
-g++ main.cpp -o ame
-./ame test.ame
-./out
-echo $?
-```
-
----
-
-## Thanks
-
-Thanks to the open-source community and educators who freely share knowledge. This project is built on the foundation of that generosity.
-
-I will keep updating this compiler and README as I learn more.
-
----
+This project is for educational purposes and currently does not include a specific license.

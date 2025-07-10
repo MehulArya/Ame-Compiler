@@ -166,5 +166,13 @@ CMakeFiles/ame.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc \
  /mnt/c/CompSci\ Grad\ God\ tier/Projects/Ame-Compiler/src/./generation.h \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/ext/aligned_buffer.h \
+ /usr/include/c++/13/bits/node_handle.h \
+ /usr/include/c++/13/bits/erase_if.h \
  /mnt/c/CompSci\ Grad\ God\ tier/Projects/Ame-Compiler/src/./parser.h \
+ /usr/include/c++/13/variant /usr/include/c++/13/bits/parse_numbers.h \
  /mnt/c/CompSci\ Grad\ God\ tier/Projects/Ame-Compiler/src/./tokenization.h
